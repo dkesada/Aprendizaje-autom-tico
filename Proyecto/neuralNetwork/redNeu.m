@@ -2,16 +2,24 @@ function [Theta1, Theta2, X, y] = redNeu(lambda)
 
  load("data.mat");
  warning("off");
+ 
+ # Eliminar fnlwtg
+ X = [X(:,1:2),X(:,4:13)];
+ Xval = [Xval(:,1:2),Xval(:,4:13)];
+ 
  Theta1 = pesosAleatorios(columns(X)+1,25); # Theta inicializadas aleatoriamente
  Theta2 = pesosAleatorios(26,1);
  thetaVec = [Theta1(:); Theta2(:)];
  
+ # Normalizacion
+ [X,mu,sigma] = featureNormalize(X);
+ Xval = normalizar(Xval, mu, sigma);
  
  num_entradas = columns(X);
  num_ocultas = rows(Theta1);
  num_etiquetas = rows(Theta2);
  
- options = optimset('GradObj', 'on', 'MaxIter', 10);
+ options = optimset('GradObj', 'on', 'MaxIter', 100);
  aux = fmincg(@(t) (costeRN(t, num_entradas, num_ocultas, num_etiquetas, X, y, lambda)) , thetaVec, options);
  Theta1 = reshape(aux (1: num_ocultas * (num_entradas + 1)) , num_ocultas , (num_entradas + 1)); 
  Theta2 = reshape(aux ((1 + (num_ocultas * (num_entradas + 1))) : end),num_etiquetas , (num_ocultas + 1));
