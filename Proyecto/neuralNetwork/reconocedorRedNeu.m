@@ -1,4 +1,4 @@
-function [] = reconocedorRedNeu(X, y, Theta1, Theta2)
+function [correctos] = reconocedorRedNeu(X, y, Theta1, Theta2)
  
  aux(1:rows(X)) = 1;
  X = [aux;X']';

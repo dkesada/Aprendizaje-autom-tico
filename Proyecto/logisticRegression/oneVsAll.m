@@ -23,9 +23,9 @@ function [theta] = oneVsAll(X, y, Xval, yval, lambda)
  Xval = [aux;Xval']';
  
  
- initial_theta = zeros (columns(X), 1);
+ initial_theta = zeros(columns(X), 1);
  
- options = optimset('GradObj', 'on', 'MaxIter', 200);
+ options = optimset('GradObj', 'on', 'MaxIter', 1000);
  
  theta = fmincg(@(t) (lrCostFunction(t, X, y, lambda)) , initial_theta , options);
  
