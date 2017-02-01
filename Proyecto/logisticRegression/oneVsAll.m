@@ -1,4 +1,4 @@
-function [theta] = oneVsAll(X, y, Xval, yval, lambda)
+function [theta,correctos] = oneVsAll(X, y, Xval, yval, lambda)
  %ONEVSALL entrena un clasificador por regresión logística y devuelve
  % el resultado en una matriz theta
  tic
@@ -9,8 +9,8 @@ function [theta] = oneVsAll(X, y, Xval, yval, lambda)
  #Xval = [Xval(:,1:2),Xval(:,4:13)];
  
  # Crear atributos
- #X = cuadrados(X,2);
- #Xval = cuadrados(Xval,2);
+ X = potencias(X,3);
+ Xval = potencias(Xval,3);
  
  # Normalizacion
  [X,mu,sigma] = featureNormalize(X);
@@ -25,7 +25,7 @@ function [theta] = oneVsAll(X, y, Xval, yval, lambda)
  
  initial_theta = zeros(columns(X), 1);
  
- options = optimset('GradObj', 'on', 'MaxIter', 1000);
+ options = optimset('GradObj', 'on', 'MaxIter', 3000);
  
  theta = fmincg(@(t) (lrCostFunction(t, X, y, lambda)) , initial_theta , options);
  
